@@ -2,6 +2,7 @@
 #include <iostream>
 
 // Globals
+
 int gScreenWidth = 640;
 int gScreenHeight = 480;
 SDL_Window* gGraphicsApplicationWindow = nullptr;
@@ -37,7 +38,7 @@ void InitializeProgram() {
         std::cout << "OpenGL context not available" << std::endl;
         exit(1);
     }
-    
+
 }
 
 void Input(){
