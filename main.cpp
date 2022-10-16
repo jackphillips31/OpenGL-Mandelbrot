@@ -2,15 +2,17 @@
 #include <iostream>
 
 // Globals
-int gScreenHeight = 640;
-int gScreenWidth = 480;
+int gScreenWidth = 640;
+int gScreenHeight = 480;
 SDL_Window* gGraphicsApplicationWindow = nullptr;
 SDL_GLContext gOpenGLContext = nullptr;
 
+bool gQuit = false; // If true, we quit
+
 void InitializeProgram() {
-    if(SDL_Init(SDL_INIT_VIDEO) < 0){
-        std::cout << "SDL2 could not initialize video subsystem"
-                  << std::endl;
+
+    if(SDL_Init(SDL_INIT_VIDEO)<0){
+        std::cout << "SDL2 could not initialize video subsystem" << std::endl;
         exit(1);
     }
 
@@ -35,13 +37,48 @@ void InitializeProgram() {
         std::cout << "OpenGL context not available" << std::endl;
         exit(1);
     }
+    
+}
+
+void Input(){
+    SDL_Event e;
+
+    while(SDL_PollEvent(&e) != 0){
+        if(e.type == SDL_QUIT){
+            std::cout << "Goodbye!" << std::endl;
+            gQuit = true;
+        }
+    }
+}
+
+void PreDraw(){
+
+}
+
+void Draw(){
+
 }
 
 void MainLoop() {
 
+    while(!gQuit){
+
+        Input();
+
+        PreDraw();
+
+        Draw();
+
+        // Update the screen
+        SDL_GL_SwapWindow(gGraphicsApplicationWindow);
+    }
+
 }
 
 void CleanUp() {
+    std::cout << "Clean up called" << std::endl;
+    SDL_DestroyWindow(gGraphicsApplicationWindow);
+
     SDL_Quit();
 }
 
